@@ -10,6 +10,7 @@ import {
   Camera,
   CheckSquare,
 } from "lucide-react";
+import confetti from "canvas-confetti";
 
 // Import dummy images (would be replaced with your actual photos)
 import img1 from "./assets/image1.jpg";
@@ -32,10 +33,10 @@ const bucketListItems = [
     icon: "✈️",
   },
   {
-    title: "Learn to Dance Together",
+    title: "Go Paragliding Together",
     description:
-      "Take dance lessons and surprise everyone at our next celebration",
-    icon: "💃",
+      "Soar through the skies side by side and feel the wind of freedom and love!",
+    icon: "🪂",
   },
   {
     title: "Go Stargazing",
@@ -49,10 +50,10 @@ const bucketListItems = [
     icon: "🌱",
   },
   {
-    title: "Take a Cooking Class",
+    title: "Cook Together (Chef Me, Student You 😄)",
     description:
-      "Learn to make something exotic and enjoy the delicious results",
-    icon: "🍳",
+      "I'll teach you all my kitchen secrets — from spicy dishes to sweet desserts, with love as the main ingredient.",
+    icon: "👨‍🍳",
   },
   {
     title: "Road Trip Adventure",
@@ -67,6 +68,8 @@ export default function App() {
   const [currentQuote, setCurrentQuote] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
   const [hoveredBucketItem, setHoveredBucketItem] = useState(null);
+  const [clicked, setClicked] = useState(false);
+  const [buttonText, setButtonText] = useState("Click For a Surprise");
 
   const loveQuotes = [
     "Every moment with you feels like magic.",
@@ -75,17 +78,29 @@ export default function App() {
     "Loving you is as natural as breathing.",
   ];
 
+  const messages = [
+    "You're my sunshine ☀️",
+    "Made for each other 💞",
+    "Forever yours 💖",
+    "Click for more love 💘",
+  ];
+
+  useEffect(() => {
+    if (clicked) {
+      const glow = document.body.animate(
+        [{ backgroundColor: "#fff0f6" }, { backgroundColor: "#ffffff" }],
+        { duration: 700 }
+      );
+      glow.onfinish = () => setClicked(false);
+    }
+  }, [clicked]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentQuote((prev) => (prev + 1) % loveQuotes.length);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
-
-  const triggerConfetti = () => {
-    setShowConfetti(true);
-    setTimeout(() => setShowConfetti(false), 3000);
-  };
 
   return (
     <div className="bg-gradient-to-br from-pink-50 to-purple-100 text-center font-sans text-gray-800">
@@ -179,29 +194,69 @@ export default function App() {
         >
           <motion.button
             onClick={() => {
-              triggerConfetti();
-              // Add vibration for mobile devices
-              if (navigator.vibrate) {
-                navigator.vibrate(200);
+              // Vibrate
+              if (navigator.vibrate) navigator.vibrate(200);
+
+              const audio = new Audio("/heartbeat.mp3"); // make sure it's in public/sounds/
+              audio.play().catch((e) => console.log("Autoplay prevented:", e));
+
+              // Stop after 5 seconds
+              setTimeout(() => {
+                audio.pause();
+                audio.currentTime = 0; // reset if you want to replay later
+              }, 5000);
+
+              // Emoji Confetti
+              const emojis = ["💖", "💘", "💫", "🥰", "🌸"];
+              emojis.forEach((emoji) => {
+                confetti({
+                  particleCount: 20,
+                  spread: 100,
+                  origin: { y: 0.6 },
+                  scalar: 1.2,
+                  ticks: 200,
+                  shapes: ["text"],
+                  text: emoji,
+                });
+              });
+
+              // Pulse animation
+              setClicked(true);
+
+              // Reveal love note
+              setShowLoveNote(true);
+
+              // Scroll to next section
+              const el = document.getElementById("next-surprise");
+              if (el) {
+                setTimeout(() => {
+                  el.scrollIntoView({ behavior: "smooth" });
+                }, 300);
               }
+
+              // Change button text randomly
+              const newText =
+                messages[Math.floor(Math.random() * messages.length)];
+              setButtonText(newText);
             }}
             className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-4 rounded-full font-medium shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none relative overflow-hidden group"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <span className="relative z-10 flex items-center">
-              <span className="mr-2">Click For a Surprise</span>
+              <span className="mr-2">{buttonText}</span>
               <Heart size={20} className="inline-block" fill="#ffffff" />
             </span>
-            <motion.span
-              className="absolute inset-0 bg-pink-600 rounded-full"
-              initial={{ scale: 0, opacity: 0 }}
-              whileHover={{
-                scale: 1.5,
-                opacity: 0.3,
-                transition: { duration: 0.5 },
-              }}
-            />
+
+            {/* Click Glow Pulse */}
+            {clicked && (
+              <motion.span
+                className="absolute inset-0 rounded-full bg-white opacity-20"
+                initial={{ scale: 0.5, opacity: 0.6 }}
+                animate={{ scale: 2, opacity: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+              />
+            )}
           </motion.button>
 
           <motion.p
@@ -212,6 +267,23 @@ export default function App() {
           >
             A little magic awaits...
           </motion.p>
+
+          {showLoveNote && (
+            <motion.div
+              className="mt-6 p-6 bg-white border border-pink-200 rounded-2xl shadow-xl text-center max-w-lg mx-auto"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <h3 className="text-xl font-semibold text-pink-600 mb-2">
+                A Little Love Note 💌
+              </h3>
+              <p className="text-gray-700">
+                You're the reason behind my smile every day. I can't wait to
+                create a million memories with you. 💖
+              </p>
+            </motion.div>
+          )}
         </motion.div>
 
         {/* Animated quote carousel */}
@@ -343,18 +415,6 @@ export default function App() {
           {/* Gallery Masonry Layout */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {images.map((img, idx) => {
-              // Add captions for each image
-              const captions = [
-                "The day we first met",
-                "Our favorite vacation together",
-                "That perfect sunset we shared",
-                "When you surprised me with a picnic",
-                "Dancing in the rain",
-                "Our anniversary celebration",
-                "That spontaneous road trip",
-                "The moment I knew you were the one",
-              ];
-
               // Random heights for masonry effect
               const heights = ["h-60", "h-72", "h-80", "h-64"];
               const randomHeight = heights[idx % heights.length];
@@ -378,20 +438,6 @@ export default function App() {
                     alt={`Our memory ${idx + 1}`}
                     className={`w-full ${randomHeight} object-cover transition-all duration-500 group-hover:scale-110`}
                   />
-
-                  {/* Caption overlay */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4"
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                  >
-                    <p className="text-white font-medium text-lg">
-                      {captions[idx]}
-                    </p>
-                    <p className="text-white text-sm opacity-80">
-                      ❤️ {new Date(2023, idx, idx + 1).toLocaleDateString()}
-                    </p>
-                  </motion.div>
 
                   {/* Heart icon on hover */}
                   <motion.div
