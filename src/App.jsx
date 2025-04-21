@@ -202,10 +202,7 @@ export default function App() {
               // Play heartbeat sound
               const audio = new Audio("/heartbeat.mp3");
               audio.play().catch((e) => console.log("Autoplay prevented:", e));
-              setTimeout(() => {
-                audio.pause();
-                audio.currentTime = 0;
-              }, 5000);
+
 
               // Emoji Confetti
               const emojis = ["💖", "💘", "💫", "🥰", "🌸"];
@@ -289,7 +286,7 @@ export default function App() {
 
         {/* Animated quote carousel */}
         <motion.div
-          className="absolute bottom-12 left-0 right-0 mx-auto max-w-xl px-6 py-4 bg-white bg-opacity-80 rounded-lg shadow-md z-10"
+          className="absolute bottom-10 left-0 right-0 mx-auto max-w-xl px-6 py-4 bg-white bg-opacity-80 rounded-lg shadow-md z-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 1 }}
@@ -545,7 +542,7 @@ export default function App() {
                       <p className="text-lg leading-relaxed text-gray-700">
                         Forever yours,
                         <br />
-                        [Your Name]
+                        Nikhil
                       </p>
                     </div>
                   </motion.div>
