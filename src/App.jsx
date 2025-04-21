@@ -11,6 +11,7 @@ import {
   CheckSquare,
 } from "lucide-react";
 import confetti from "canvas-confetti";
+import Swal from "sweetalert2";
 
 // Import dummy images (would be replaced with your actual photos)
 import img1 from "./assets/image1.jpg";
@@ -70,6 +71,25 @@ export default function App() {
   const [hoveredBucketItem, setHoveredBucketItem] = useState(null);
   const [clicked, setClicked] = useState(false);
   const [buttonText, setButtonText] = useState("Click For a Surprise");
+
+  const handleButtonClick = () => {
+    Swal.fire({
+      title: "Yay! 💖",
+      text: "Our magical journey begins now ✨🌸",
+      imageUrl: "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
+      imageWidth: 200,
+      imageHeight: 200,
+      confirmButtonText: "Aww 🥹",
+      confirmButtonColor: "#e91e63",
+      background: "#fff0f5",
+      backdrop: `
+        rgba(0,0,123,0.4)
+        url("https://i.gifer.com/7efs.gif")
+        left top
+        no-repeat
+      `,
+    });
+  };
 
   const loveQuotes = [
     "Every moment with you feels like magic.",
@@ -202,7 +222,6 @@ export default function App() {
               // Play heartbeat sound
               const audio = new Audio("/heartbeat.mp3");
               audio.play().catch((e) => console.log("Autoplay prevented:", e));
-
 
               // Emoji Confetti
               const emojis = ["💖", "💘", "💫", "🥰", "🌸"];
@@ -371,6 +390,7 @@ export default function App() {
 
           <motion.button
             className="mt-12 mx-auto block bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-3 rounded-full font-medium shadow-lg"
+            onClick={handleButtonClick}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0 }}
