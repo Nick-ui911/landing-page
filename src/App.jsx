@@ -126,6 +126,30 @@ export default function App() {
     <div className="bg-gradient-to-br from-pink-50 to-purple-100 text-center font-sans text-gray-800">
       {/* Floating Hearts Animation (always visible) */}
       <div className="fixed w-full h-full pointer-events-none overflow-hidden">
+        <motion.div
+          className="fixed top-0 left-0 w-full h-full z-[-1] pointer-events-none"
+          animate={{
+            y: [0, 10, 0],
+          }}
+          transition={{ duration: 4, repeat: Infinity }}
+        >
+          {[...Array(10)].map((_, i) => (
+            <span
+              key={i}
+              className="absolute text-2xl"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}vh`,
+                animation: `float ${
+                  4 + Math.random() * 2
+                }s ease-in-out infinite`,
+              }}
+            >
+              {["💖", "💕", "🌸", "💫"][i % 4]}
+            </span>
+          ))}
+        </motion.div>
+
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
@@ -256,7 +280,7 @@ export default function App() {
                 messages[Math.floor(Math.random() * messages.length)];
               setButtonText(newText);
             }}
-            className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-4 mb-2 rounded-full font-medium shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none relative overflow-hidden group"
+            className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-4 mb-6 rounded-full font-medium shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none relative overflow-hidden group"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
