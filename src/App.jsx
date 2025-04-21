@@ -25,6 +25,43 @@ import img8 from "./assets/image8.jpg";
 
 const images = [img1, img2, img3, img4, img5, img6, img7, img8];
 
+{
+  /* Helper component for text reveal animation */
+}
+const RevealText = ({ children, delay }) => {
+  return (
+    <motion.p
+      className="text-lg leading-relaxed text-gray-700 mb-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay }}
+    >
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          staggerChildren: 0.02,
+          delayChildren: delay,
+        }}
+        className="block"
+      >
+        {children.split(" ").map((word, i) => (
+          <motion.span
+            key={i}
+            className="inline-block"
+            variants={{
+              initial: { y: 20, opacity: 0 },
+              animate: { y: 0, opacity: 1 },
+            }}
+          >
+            {word}{" "}
+          </motion.span>
+        ))}
+      </motion.span>
+    </motion.p>
+  );
+};
+
 // Bucket list items to do together
 const bucketListItems = [
   {
@@ -427,7 +464,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* Improved Photo Album Section */}
       {/* Enhanced Photo Album Section */}
       <section className="py-16 bg-gradient-to-r from-purple-50 to-pink-50">
         <div className="max-w-6xl mx-auto px-6">
@@ -592,14 +628,13 @@ export default function App() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
             viewport={{ once: true }}
-          >
-
-          </motion.div>
+          ></motion.div>
         </div>
       </section>
 
       {/* Love Letter */}
-      <section className="py-20 px-6 bg-pink-50 relative overflow-hidden">
+
+      <section className="py-16 sm:py-20 px-4 sm:px-6 bg-pink-50 relative overflow-hidden">
         <motion.div
           className="absolute inset-0 opacity-5"
           animate={{
@@ -618,34 +653,122 @@ export default function App() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="flex items-center justify-center mb-12"
+            className="flex flex-col sm:flex-row items-center justify-center mb-8 sm:mb-12 text-center sm:text-left"
           >
-            <MessageCircleHeart size={32} className="text-pink-500 mr-3" />
-            <h2 className="text-4xl font-semibold text-pink-500">
+            <MessageCircleHeart
+              size={28}
+              className="text-pink-500 mb-2 sm:mb-0 sm:mr-3"
+            />
+            <h2 className="text-3xl sm:text-4xl font-semibold text-pink-500">
               A Letter From My Heart
             </h2>
           </motion.div>
 
           <motion.div
             className="relative"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, type: "spring", stiffness: 100 }}
             viewport={{ once: true }}
           >
-            <button
+            <motion.button
               onClick={() => setShowLoveNote(!showLoveNote)}
-              className="bg-white rounded-xl shadow-xl p-6 w-full text-left cursor-pointer transition-all duration-300 hover:shadow-2xl border-2 border-pink-200"
+              className="bg-white rounded-xl shadow-xl p-4 sm:p-6 w-full text-left cursor-pointer transition-all duration-300 hover:shadow-2xl border-2 border-pink-200 relative overflow-hidden"
+              whileHover={{
+                scale: 1.02,
+                boxShadow: "0 25px 50px -12px rgba(219, 39, 119, 0.25)",
+                borderColor: "rgb(244, 114, 182)",
+              }}
+              whileTap={{ scale: 0.98 }}
             >
-              <div className="flex justify-between items-center">
-                <h3 className="text-2xl font-bold text-pink-600">
-                  My Love Letter to You 💌
-                </h3>
-                <span className="text-pink-500">
-                  {showLoveNote ? "Close" : "Open"}
-                </span>
+              {/* Background pattern */}
+              <div className="absolute inset-0 opacity-5">
+                <motion.div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage:
+                      'url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M10 2C8.34 2 7 3.34 7 5c0 1.3.84 2.4 2 2.82V9c0 .55.45 1 1 1s1-.45 1-1V7.82c1.16-.42 2-1.52 2-2.82 0-1.66-1.34-3-3-3z" fill="%23db2777" /></svg>\')',
+                    backgroundSize: "30px 30px",
+                  }}
+                  animate={{
+                    backgroundPosition: ["0px 0px", "30px 30px"],
+                  }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 20,
+                    ease: "linear",
+                  }}
+                />
               </div>
 
+              {/* Header with animated envelope - Improved for mobile */}
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center relative z-10">
+                <div className="flex items-center mb-4 sm:mb-0">
+                  <motion.div
+                    initial={{ rotate: 0 }}
+                    whileHover={{ rotate: [0, -10, 10, -5, 5, 0] }}
+                    transition={{ duration: 0.6 }}
+                    className="mr-3"
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      className="text-pink-600"
+                    >
+                      <motion.path
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ delay: 0.5, duration: 1 }}
+                        d="M22 12h-4l-3 9L9 3l-3 9H2"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </motion.div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-pink-600 font-serif">
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                    >
+                      My Love Letter to You
+                      <motion.span
+                        initial={{ scale: 0, rotate: -45 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ delay: 0.7, type: "spring" }}
+                        className="inline-block ml-2"
+                      >
+                        💌
+                      </motion.span>
+                    </motion.span>
+                  </h3>
+                </div>
+                <motion.span
+                  className="text-pink-500 px-3 sm:px-4 py-1 rounded-full border border-pink-200 text-sm font-medium self-start sm:self-auto"
+                  whileHover={{
+                    scale: 1.05,
+                    backgroundColor: "rgba(249, 168, 212, 0.1)",
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {showLoveNote ? "Close Letter" : "Open Letter"}
+                  <motion.span
+                    animate={{
+                      rotate: showLoveNote ? 180 : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                    className="inline-block ml-1"
+                  >
+                    ↓
+                  </motion.span>
+                </motion.span>
+              </div>
+
+              {/* Letter content */}
               <AnimatePresence>
                 {showLoveNote && (
                   <motion.div
@@ -655,11 +778,32 @@ export default function App() {
                     transition={{ duration: 0.5 }}
                     className="overflow-hidden"
                   >
-                    <div className="mt-6 pt-6 border-t border-pink-100">
-                      <p className="text-lg leading-relaxed text-gray-700 mb-4">
+                    <motion.div
+                      className="mt-6 pt-6 border-t border-pink-100 relative font-serif"
+                      initial={{ y: 50 }}
+                      animate={{ y: 0 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 20,
+                      }}
+                    >
+                      {/* Improved text animation that preserves proper spacing */}
+                      <motion.p
+                        className="text-base sm:text-lg leading-relaxed text-gray-700 mb-4 italic"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3, duration: 0.5 }}
+                      >
                         My dearest love,
-                      </p>
-                      <p className="text-lg leading-relaxed text-gray-700 mb-4">
+                      </motion.p>
+
+                      <motion.p
+                        className="text-base sm:text-lg leading-relaxed text-gray-700 mb-4"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5, duration: 0.5 }}
+                      >
                         Every day with you is a dream I never want to end. Your
                         smile lights up my world, your voice calms my soul, and
                         your heart is the home I never knew I needed. The way
@@ -667,30 +811,113 @@ export default function App() {
                         I'm thinking without me saying a word, and the feeling
                         of your hand in mine - these are the moments I treasure
                         most.
-                      </p>
-                      <p className="text-lg leading-relaxed text-gray-700 mb-4">
+                      </motion.p>
+
+                      <motion.p
+                        className="text-base sm:text-lg leading-relaxed text-gray-700 mb-4"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.8, duration: 0.5 }}
+                      >
                         This journey with you is the most beautiful adventure,
                         and I want you to know that every step we take together
                         makes my heart fuller. You've shown me what it means to
                         love completely and be loved in return. You're my best
                         friend, my confidant, my partner in all things.
-                      </p>
-                      <p className="text-lg leading-relaxed text-gray-700 mb-4">
+                      </motion.p>
+
+                      <motion.p
+                        className="text-base sm:text-lg leading-relaxed text-gray-700 mb-4"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 1.1, duration: 0.5 }}
+                      >
                         I promise to stand by you, to lift you up when you need
                         strength, to celebrate your victories as my own, and to
                         face whatever challenges come our way together. My love
                         for you grows deeper with each passing day.
-                      </p>
-                      <p className="text-lg leading-relaxed text-gray-700">
+                      </motion.p>
+
+                      <motion.p
+                        className="text-base sm:text-lg leading-relaxed text-gray-700 mt-8"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 1.4, duration: 0.5 }}
+                      >
                         Forever yours,
                         <br />
-                        Nikhil
-                      </p>
-                    </div>
+                        <motion.span
+                          className="font-bold text-pink-600 text-lg sm:text-xl"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 1.6 }}
+                        >
+                          Nikhil
+                        </motion.span>
+                      </motion.p>
+
+                      {/* Line underline effect */}
+                      <motion.div
+                        className="absolute -bottom-2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent"
+                        initial={{ scaleX: 0, opacity: 0 }}
+                        animate={{ scaleX: 1, opacity: 1 }}
+                        transition={{ delay: 1.7, duration: 0.8 }}
+                      />
+
+                      {/* Floating hearts animation - Reduced quantity for mobile */}
+                      <div className="absolute right-0 bottom-0">
+                        {[...Array(3)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            className="absolute text-pink-500 opacity-80"
+                            initial={{
+                              y: 0,
+                              x: 0,
+                              opacity: 0,
+                              scale: 0.5 + Math.random() * 0.5,
+                            }}
+                            animate={{
+                              y: -60 - Math.random() * 60,
+                              x: -10 + Math.random() * 20,
+                              opacity: [0, 0.8, 0],
+                              scale: [0.5, 0.8 + Math.random() * 0.4, 0.5],
+                            }}
+                            transition={{
+                              repeat: Infinity,
+                              duration: 3 + Math.random() * 2,
+                              delay: 1 + i * 0.5,
+                              repeatDelay: Math.random() * 2,
+                            }}
+                            style={{
+                              bottom: `${10 + i * 20}px`,
+                              right: `${10 + i * 15}px`,
+                            }}
+                          >
+                            ❤️
+                          </motion.div>
+                        ))}
+                      </div>
+                    </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </button>
+            </motion.button>
+
+            {/* Decorative elements around the letter */}
+            <motion.div
+              className="absolute -z-10 w-full h-full top-3 sm:top-5 left-2 sm:left-5 rounded-xl border-2 border-pink-100 opacity-70"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 0.4, scale: 1 }}
+              transition={{ delay: 0.3 }}
+            />
+            <motion.div
+              className="absolute -z-10 w-8 sm:w-12 h-8 sm:h-12 -top-2 -right-1 sm:-right-2 text-xl sm:text-2xl"
+              initial={{ scale: 0, rotate: -30 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ delay: 0.5, type: "spring" }}
+            >
+              ✨
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -850,6 +1077,23 @@ export default function App() {
         >
           Forever Yours
         </motion.h2>
+        {/* Wax seal effect - fixed position relative to the whole button */}
+        <motion.div
+          className="absolute top-2 right-2 sm:top-4 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-red-500 to-pink-600 shadow-lg flex items-center justify-center z-20"
+          style={{ opacity: showLoveNote ? 0 : 0.9 }}
+          initial={{ scale: 0 }}
+          animate={{ scale: showLoveNote ? 0 : 1 }}
+          transition={{ type: "spring", stiffness: 300, damping: 15 }}
+        >
+          <motion.div
+            initial={{ opacity: 0, rotate: -20 }}
+            animate={{ opacity: 1, rotate: 0 }}
+            transition={{ delay: 0.5 }}
+            className="text-white font-serif text-base sm:text-lg font-bold"
+          >
+            N
+          </motion.div>
+        </motion.div>
 
         <motion.p
           className="text-xl text-gray-700 max-w-xl text-center mb-8"
