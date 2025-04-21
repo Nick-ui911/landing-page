@@ -428,6 +428,7 @@ export default function App() {
       </section>
 
       {/* Improved Photo Album Section */}
+      {/* Enhanced Photo Album Section */}
       <section className="py-16 bg-gradient-to-r from-purple-50 to-pink-50">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
@@ -437,10 +438,21 @@ export default function App() {
             viewport={{ once: true }}
             className="flex items-center justify-center mb-12"
           >
-            <Camera size={32} className="text-pink-500 mr-3" />
-            <h2 className="text-4xl font-semibold text-pink-500">
-              Our Photo Album
-            </h2>
+            <motion.div
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.8 }}
+            >
+              <Camera size={32} className="text-pink-500 mr-3" />
+            </motion.div>
+            <motion.h2
+              className="text-4xl font-semibold text-pink-500"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              Photo Album
+            </motion.h2>
           </motion.div>
 
           <motion.p
@@ -449,54 +461,140 @@ export default function App() {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
+            whileHover={{ scale: 1.05 }}
           >
             Each photo tells a story of our journey together, moments frozen in
             time that I'll cherish forever.
           </motion.p>
 
-          {/* Gallery Masonry Layout */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {/* Gallery Masonry Layout with Staggered Animation */}
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.15,
+                },
+              },
+            }}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
             {images.map((img, idx) => {
               // Random heights for masonry effect
               const heights = ["h-60", "h-72", "h-80", "h-64"];
               const randomHeight = heights[idx % heights.length];
 
+              // Random initial rotations for polaroid effect
+              const initialRotation = idx % 2 === 0 ? -2 : 2;
+
               return (
                 <motion.div
                   key={idx}
-                  className="overflow-hidden rounded-xl shadow-lg relative group"
+                  className="overflow-hidden rounded-lg shadow-lg relative group bg-white p-3"
+                  variants={{
+                    hidden: { opacity: 0, y: 50, rotate: initialRotation },
+                    show: {
+                      opacity: 1,
+                      y: 0,
+                      rotate: initialRotation,
+                      transition: { duration: 0.6 },
+                    },
+                  }}
                   whileHover={{
                     scale: 1.05,
-                    rotate: idx % 2 === 0 ? 3 : -3,
+                    rotate: idx % 2 === 0 ? 5 : -5,
                     zIndex: 10,
+                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.2)",
                   }}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  viewport={{ once: true }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 15,
+                  }}
                 >
-                  <img
-                    src={img}
-                    alt={`Our memory ${idx + 1}`}
-                    className={`w-full ${randomHeight} object-cover transition-all duration-500 group-hover:scale-110`}
-                  />
-
-                  {/* Heart icon on hover */}
-                  <motion.div
-                    className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    initial={{ scale: 0 }}
-                    whileHover={{ scale: 1.2 }}
-                  >
-                    <Heart
-                      size={24}
-                      className="text-white drop-shadow-lg"
-                      fill="#ffffff"
+                  <div className="overflow-hidden rounded-sm">
+                    <motion.img
+                      src={img}
+                      alt={`Our memory ${idx + 1}`}
+                      className={`w-full ${randomHeight} object-cover`}
+                      whileHover={{ scale: 1.15 }}
+                      transition={{ duration: 0.5 }}
                     />
+                  </div>
+
+                  {/* Caption text appearing on hover */}
+                  <motion.div
+                    className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ delay: 0.5 + idx * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <p className="text-sm font-medium">Memory #{idx + 1}</p>
+                  </motion.div>
+
+                  {/* Heart icon with animation */}
+                  <motion.div
+                    className="absolute top-5 right-5"
+                    initial={{ scale: 0, opacity: 0 }}
+                    whileHover={{ scale: 1.3, rotate: 10 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    transition={{
+                      delay: 0.8 + idx * 0.1,
+                      type: "spring",
+                      stiffness: 400,
+                    }}
+                    viewport={{ once: true }}
+                  >
+                    <motion.div
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.8 }}
+                    >
+                      <Heart
+                        size={24}
+                        className="text-pink-500 drop-shadow-lg"
+                        fill="rgba(236, 72, 153, 0.6)"
+                      />
+                    </motion.div>
+                  </motion.div>
+
+                  {/* Date tag in corner */}
+                  <motion.div
+                    className="absolute top-5 left-5 bg-white/80 backdrop-blur-sm px-2 py-1 rounded text-xs font-medium text-gray-700 shadow-sm"
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.9 + idx * 0.1 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    {new Date(
+                      2023,
+                      idx % 12,
+                      (idx % 28) + 1
+                    ).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })}
                   </motion.div>
                 </motion.div>
               );
             })}
-          </div>
+          </motion.div>
+
+          {/* "See More" button */}
+          <motion.div
+            className="mt-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+
+          </motion.div>
         </div>
       </section>
 
