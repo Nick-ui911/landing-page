@@ -23,8 +23,10 @@ import img5 from "./assets/image5.jpg";
 import img6 from "./assets/image6.jpg";
 import img7 from "./assets/image7.jpg";
 import img8 from "./assets/image8.jpg";
+import img9 from "./assets/image9.jpg";
+import img10 from "./assets/image10.jpg";
 
-const images = [img1, img2, img3, img4, img5, img6, img7, img8];
+const images = [img1, img2, img3, img4, img5, img6, img7, img8,img9,img10];
 
 {
   /* Helper component for text reveal animation */
