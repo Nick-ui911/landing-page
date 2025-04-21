@@ -187,6 +187,7 @@ export default function App() {
         </motion.p>
 
         {/* Improved Click for Surprise Button */}
+        {/* Improved Click for Surprise Button */}
         <motion.div
           className="mt-12 z-10 flex flex-col items-center"
           initial={{ opacity: 0 }}
@@ -198,13 +199,12 @@ export default function App() {
               // Vibrate
               if (navigator.vibrate) navigator.vibrate(200);
 
-              const audio = new Audio("/heartbeat.mp3"); // make sure it's in public/sounds/
+              // Play heartbeat sound
+              const audio = new Audio("/heartbeat.mp3");
               audio.play().catch((e) => console.log("Autoplay prevented:", e));
-
-              // Stop after 5 seconds
               setTimeout(() => {
                 audio.pause();
-                audio.currentTime = 0; // reset if you want to replay later
+                audio.currentTime = 0;
               }, 5000);
 
               // Emoji Confetti
@@ -240,7 +240,7 @@ export default function App() {
                 messages[Math.floor(Math.random() * messages.length)];
               setButtonText(newText);
             }}
-            className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-4 rounded-full font-medium shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none relative overflow-hidden group"
+            className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-4 mb-2 rounded-full font-medium shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none relative overflow-hidden group"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -271,7 +271,7 @@ export default function App() {
 
           {showLoveNote && (
             <motion.div
-              className="mt-6 p-6 bg-white border border-pink-200 rounded-2xl shadow-xl text-center max-w-lg mx-auto"
+              className="mt-2 mb-20 p-6 bg-white border border-pink-200 rounded-2xl shadow-xl text-center max-w-lg mx-auto"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
