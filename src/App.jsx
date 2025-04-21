@@ -1,53 +1,65 @@
 // src/App.jsx
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import "./index.css";
-import { Heart, Calendar, MessageCircleHeart, Gift, Map, Camera, CheckSquare } from "lucide-react";
+import {
+  Heart,
+  Calendar,
+  MessageCircleHeart,
+  Gift,
+  Map,
+  Camera,
+  CheckSquare,
+} from "lucide-react";
 
 // Import dummy images (would be replaced with your actual photos)
 import img1 from "./assets/image1.jpg";
-import img2 from "./assets/image1.jpg";
-import img3 from "./assets/image1.jpg";
-import img4 from "./assets/image1.jpg";
-import img5 from "./assets/image1.jpg";
-import img6 from "./assets/image1.jpg";
-import img7 from "./assets/image1.jpg";
-import img8 from "./assets/image1.jpg";
+import img2 from "./assets/image2.jpg";
+import img3 from "./assets/image3.jpg";
+import img4 from "./assets/image4.jpg";
+import img5 from "./assets/image5.jpg";
+import img6 from "./assets/image6.jpg";
+import img7 from "./assets/image7.jpg";
+import img8 from "./assets/image8.jpg";
 
 const images = [img1, img2, img3, img4, img5, img6, img7, img8];
 
 // Bucket list items to do together
 const bucketListItems = [
-  { 
-    title: "Travel to Paris", 
-    description: "Walk along the Seine, visit the Eiffel Tower, and enjoy croissants at a café",
-    icon: "✈️" 
+  {
+    title: "Travel to Paris",
+    description:
+      "Walk along the Seine, visit the Eiffel Tower, and enjoy croissants at a café",
+    icon: "✈️",
   },
-  { 
-    title: "Learn to Dance Together", 
-    description: "Take dance lessons and surprise everyone at our next celebration",
-    icon: "💃" 
+  {
+    title: "Learn to Dance Together",
+    description:
+      "Take dance lessons and surprise everyone at our next celebration",
+    icon: "💃",
   },
-  { 
-    title: "Go Stargazing", 
-    description: "Find a quiet spot away from the city and count shooting stars",
-    icon: "✨" 
+  {
+    title: "Go Stargazing",
+    description:
+      "Find a quiet spot away from the city and count shooting stars",
+    icon: "✨",
   },
-  { 
-    title: "Plant a Garden", 
+  {
+    title: "Plant a Garden",
     description: "Grow flowers and vegetables together and watch them bloom",
-    icon: "🌱" 
+    icon: "🌱",
   },
-  { 
-    title: "Take a Cooking Class", 
-    description: "Learn to make something exotic and enjoy the delicious results",
-    icon: "🍳" 
+  {
+    title: "Take a Cooking Class",
+    description:
+      "Learn to make something exotic and enjoy the delicious results",
+    icon: "🍳",
   },
-  { 
-    title: "Road Trip Adventure", 
-    description: "Pack the car and hit the open road with no destination in mind",
-    icon: "🚗" 
-  }
+  {
+    title: "Road Trip Adventure",
+    description:
+      "Pack the car and hit the open road with no destination in mind",
+    icon: "🚗",
+  },
 ];
 
 export default function App() {
@@ -55,14 +67,14 @@ export default function App() {
   const [currentQuote, setCurrentQuote] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
   const [hoveredBucketItem, setHoveredBucketItem] = useState(null);
-  
+
   const loveQuotes = [
     "Every moment with you feels like magic.",
     "You're the missing piece I never knew I needed.",
     "My favorite place in the world is next to you.",
-    "Loving you is as natural as breathing."
+    "Loving you is as natural as breathing.",
   ];
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentQuote((prev) => (prev + 1) % loveQuotes.length);
@@ -83,19 +95,19 @@ export default function App() {
           <motion.div
             key={i}
             className="absolute text-2xl text-pink-400 opacity-70"
-            initial={{ 
-              x: Math.random() * window.innerWidth, 
+            initial={{
+              x: Math.random() * window.innerWidth,
               y: window.innerHeight + 100,
-              rotate: Math.random() * 360 
-            }}
-            animate={{ 
-              y: -100, 
               rotate: Math.random() * 360,
-              transition: { 
-                duration: 15 + Math.random() * 20, 
-                repeat: Infinity, 
-                delay: Math.random() * 20 
-              }
+            }}
+            animate={{
+              y: -100,
+              rotate: Math.random() * 360,
+              transition: {
+                duration: 15 + Math.random() * 20,
+                repeat: Infinity,
+                delay: Math.random() * 20,
+              },
             }}
           >
             ❤️
@@ -113,10 +125,16 @@ export default function App() {
         >
           {/* Background pattern */}
           {[...Array(20)].map((_, i) => (
-            <div key={i} className="absolute text-6xl text-pink-300" style={{ 
-              left: `${Math.random() * 100}%`, 
-              top: `${Math.random() * 100}%`
-            }}>❤️</div>
+            <div
+              key={i}
+              className="absolute text-6xl text-pink-300"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+            >
+              ❤️
+            </div>
           ))}
         </motion.div>
 
@@ -126,7 +144,11 @@ export default function App() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <Heart size={64} className="text-pink-600 mx-auto mb-6" fill="#ec4899" />
+          <Heart
+            size={64}
+            className="text-pink-600 mx-auto mb-6"
+            fill="#ec4899"
+          />
         </motion.div>
 
         <motion.h1
@@ -144,25 +166,56 @@ export default function App() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 1 }}
         >
-          This page is a testament to our love, a digital scrapbook of our journey together.
+          This page is a testament to our love, a digital scrapbook of our
+          journey together.
         </motion.p>
 
+        {/* Improved Click for Surprise Button */}
         <motion.div
-          className="mt-12 z-10"
+          className="mt-12 z-10 flex flex-col items-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 1 }}
         >
-          <button 
-            onClick={() => triggerConfetti()}
-            className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-full font-medium shadow-lg transition-all duration-300 hover:scale-105 focus:outline-none"
+          <motion.button
+            onClick={() => {
+              triggerConfetti();
+              // Add vibration for mobile devices
+              if (navigator.vibrate) {
+                navigator.vibrate(200);
+              }
+            }}
+            className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-4 rounded-full font-medium shadow-lg transition-all duration-300 hover:scale-110 focus:outline-none relative overflow-hidden group"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Click For a Surprise
-          </button>
+            <span className="relative z-10 flex items-center">
+              <span className="mr-2">Click For a Surprise</span>
+              <Heart size={20} className="inline-block" fill="#ffffff" />
+            </span>
+            <motion.span
+              className="absolute inset-0 bg-pink-600 rounded-full"
+              initial={{ scale: 0, opacity: 0 }}
+              whileHover={{
+                scale: 1.5,
+                opacity: 0.3,
+                transition: { duration: 0.5 },
+              }}
+            />
+          </motion.button>
+
+          <motion.p
+            className="text-sm mt-3 text-pink-600 opacity-75"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.8, duration: 0.5 }}
+          >
+            A little magic awaits...
+          </motion.p>
         </motion.div>
 
         {/* Animated quote carousel */}
-        <motion.div 
+        <motion.div
           className="absolute bottom-12 left-0 right-0 mx-auto max-w-xl px-6 py-4 bg-white bg-opacity-80 rounded-lg shadow-md z-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -194,7 +247,9 @@ export default function App() {
             className="flex items-center justify-center mb-12"
           >
             <CheckSquare size={32} className="text-pink-500 mr-3" />
-            <h2 className="text-4xl font-semibold text-pink-500">Our Bucket List</h2>
+            <h2 className="text-4xl font-semibold text-pink-500">
+              Our Bucket List
+            </h2>
           </motion.div>
 
           <motion.p
@@ -204,7 +259,8 @@ export default function App() {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            Adventures we'll experience, memories we'll create, and dreams we'll chase together.
+            Adventures we'll experience, memories we'll create, and dreams we'll
+            chase together.
           </motion.p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -212,9 +268,10 @@ export default function App() {
               <motion.div
                 key={idx}
                 className="bg-pink-50 rounded-xl overflow-hidden shadow-md relative"
-                whileHover={{ 
+                whileHover={{
                   scale: 1.05,
-                  boxShadow: "0 10px 25px -5px rgba(236, 72, 153, 0.2), 0 8px 10px -6px rgba(236, 72, 153, 0.1)"
+                  boxShadow:
+                    "0 10px 25px -5px rgba(236, 72, 153, 0.2), 0 8px 10px -6px rgba(236, 72, 153, 0.1)",
                 }}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -225,14 +282,16 @@ export default function App() {
               >
                 <div className="p-6">
                   <span className="text-4xl mb-4 block">{item.icon}</span>
-                  <h3 className="text-xl font-bold text-pink-600 mb-3">{item.title}</h3>
+                  <h3 className="text-xl font-bold text-pink-600 mb-3">
+                    {item.title}
+                  </h3>
                   <p className="text-gray-700">{item.description}</p>
                 </div>
-                <motion.div 
+                <motion.div
                   className="absolute bottom-0 left-0 right-0 h-1 bg-pink-400"
-                  animate={{ 
+                  animate={{
                     width: hoveredBucketItem === idx ? "100%" : "0%",
-                    transition: { duration: 0.4 }
+                    transition: { duration: 0.4 },
                   }}
                   initial={{ width: "0%" }}
                 />
@@ -254,7 +313,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Gallery Section */}
+      {/* Improved Photo Album Section */}
       <section className="py-16 bg-gradient-to-r from-purple-50 to-pink-50">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
@@ -265,27 +324,90 @@ export default function App() {
             className="flex items-center justify-center mb-12"
           >
             <Camera size={32} className="text-pink-500 mr-3" />
-            <h2 className="text-4xl font-semibold text-pink-500">Our Photo Album</h2>
+            <h2 className="text-4xl font-semibold text-pink-500">
+              Our Photo Album
+            </h2>
           </motion.div>
 
+          <motion.p
+            className="text-lg text-center max-w-3xl mx-auto mb-10"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            Each photo tells a story of our journey together, moments frozen in
+            time that I'll cherish forever.
+          </motion.p>
+
+          {/* Gallery Masonry Layout */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {images.map((img, idx) => (
-              <motion.div
-                key={idx}
-                className="overflow-hidden rounded-xl shadow-lg"
-                whileHover={{ scale: 1.05, rotate: idx % 2 === 0 ? 3 : -3 }}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <img 
-                  src={img} 
-                  alt={`Our memory ${idx + 1}`} 
-                  className="w-full h-60 object-cover"
-                />
-              </motion.div>
-            ))}
+            {images.map((img, idx) => {
+              // Add captions for each image
+              const captions = [
+                "The day we first met",
+                "Our favorite vacation together",
+                "That perfect sunset we shared",
+                "When you surprised me with a picnic",
+                "Dancing in the rain",
+                "Our anniversary celebration",
+                "That spontaneous road trip",
+                "The moment I knew you were the one",
+              ];
+
+              // Random heights for masonry effect
+              const heights = ["h-60", "h-72", "h-80", "h-64"];
+              const randomHeight = heights[idx % heights.length];
+
+              return (
+                <motion.div
+                  key={idx}
+                  className="overflow-hidden rounded-xl shadow-lg relative group"
+                  whileHover={{
+                    scale: 1.05,
+                    rotate: idx % 2 === 0 ? 3 : -3,
+                    zIndex: 10,
+                  }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <img
+                    src={img}
+                    alt={`Our memory ${idx + 1}`}
+                    className={`w-full ${randomHeight} object-cover transition-all duration-500 group-hover:scale-110`}
+                  />
+
+                  {/* Caption overlay */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4"
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                  >
+                    <p className="text-white font-medium text-lg">
+                      {captions[idx]}
+                    </p>
+                    <p className="text-white text-sm opacity-80">
+                      ❤️ {new Date(2023, idx, idx + 1).toLocaleDateString()}
+                    </p>
+                  </motion.div>
+
+                  {/* Heart icon on hover */}
+                  <motion.div
+                    className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    initial={{ scale: 0 }}
+                    whileHover={{ scale: 1.2 }}
+                  >
+                    <Heart
+                      size={24}
+                      className="text-white drop-shadow-lg"
+                      fill="#ffffff"
+                    />
+                  </motion.div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -294,9 +416,9 @@ export default function App() {
       <section className="py-20 px-6 bg-pink-50 relative overflow-hidden">
         <motion.div
           className="absolute inset-0 opacity-5"
-          animate={{ 
+          animate={{
             backgroundPositionX: ["0%", "100%"],
-            backgroundPositionY: ["0%", "100%"]
+            backgroundPositionY: ["0%", "100%"],
           }}
           transition={{ duration: 30, repeat: Infinity, repeatType: "reverse" }}
           style={{
@@ -313,7 +435,9 @@ export default function App() {
             className="flex items-center justify-center mb-12"
           >
             <MessageCircleHeart size={32} className="text-pink-500 mr-3" />
-            <h2 className="text-4xl font-semibold text-pink-500">A Letter From My Heart</h2>
+            <h2 className="text-4xl font-semibold text-pink-500">
+              A Letter From My Heart
+            </h2>
           </motion.div>
 
           <motion.div
@@ -328,10 +452,14 @@ export default function App() {
               className="bg-white rounded-xl shadow-xl p-6 w-full text-left cursor-pointer transition-all duration-300 hover:shadow-2xl border-2 border-pink-200"
             >
               <div className="flex justify-between items-center">
-                <h3 className="text-2xl font-bold text-pink-600">My Love Letter to You 💌</h3>
-                <span className="text-pink-500">{showLoveNote ? "Close" : "Open"}</span>
+                <h3 className="text-2xl font-bold text-pink-600">
+                  My Love Letter to You 💌
+                </h3>
+                <span className="text-pink-500">
+                  {showLoveNote ? "Close" : "Open"}
+                </span>
               </div>
-              
+
               <AnimatePresence>
                 {showLoveNote && (
                   <motion.div
@@ -346,16 +474,30 @@ export default function App() {
                         My dearest love,
                       </p>
                       <p className="text-lg leading-relaxed text-gray-700 mb-4">
-                        Every day with you is a dream I never want to end. Your smile lights up my world, your voice calms my soul, and your heart is the home I never knew I needed. The way you laugh at my worst jokes, how you know exactly what I'm thinking without me saying a word, and the feeling of your hand in mine - these are the moments I treasure most.
+                        Every day with you is a dream I never want to end. Your
+                        smile lights up my world, your voice calms my soul, and
+                        your heart is the home I never knew I needed. The way
+                        you laugh at my worst jokes, how you know exactly what
+                        I'm thinking without me saying a word, and the feeling
+                        of your hand in mine - these are the moments I treasure
+                        most.
                       </p>
                       <p className="text-lg leading-relaxed text-gray-700 mb-4">
-                        This journey with you is the most beautiful adventure, and I want you to know that every step we take together makes my heart fuller. You've shown me what it means to love completely and be loved in return. You're my best friend, my confidant, my partner in all things.
+                        This journey with you is the most beautiful adventure,
+                        and I want you to know that every step we take together
+                        makes my heart fuller. You've shown me what it means to
+                        love completely and be loved in return. You're my best
+                        friend, my confidant, my partner in all things.
                       </p>
                       <p className="text-lg leading-relaxed text-gray-700 mb-4">
-                        I promise to stand by you, to lift you up when you need strength, to celebrate your victories as my own, and to face whatever challenges come our way together. My love for you grows deeper with each passing day.
+                        I promise to stand by you, to lift you up when you need
+                        strength, to celebrate your victories as my own, and to
+                        face whatever challenges come our way together. My love
+                        for you grows deeper with each passing day.
                       </p>
                       <p className="text-lg leading-relaxed text-gray-700">
-                        Forever yours,<br/>
+                        Forever yours,
+                        <br />
                         [Your Name]
                       </p>
                     </div>
@@ -378,7 +520,9 @@ export default function App() {
             className="flex items-center justify-center mb-12"
           >
             <Gift size={32} className="text-pink-500 mr-3" />
-            <h2 className="text-4xl font-semibold text-pink-500">Why I Love You</h2>
+            <h2 className="text-4xl font-semibold text-pink-500">
+              Why I Love You
+            </h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -390,7 +534,7 @@ export default function App() {
               "How you make ordinary moments magical",
               "The way you care so deeply for others",
               "Your passion and determination",
-              "How you make me feel safe and loved"
+              "How you make me feel safe and loved",
             ].map((reason, idx) => (
               <motion.div
                 key={idx}
@@ -402,7 +546,7 @@ export default function App() {
                 whileHover={{ scale: 1.03, backgroundColor: "#fbcfe8" }}
               >
                 <p className="text-lg text-gray-700">
-                  <span className="text-2xl text-pink-500 mr-2">❤</span> 
+                  <span className="text-2xl text-pink-500 mr-2">❤</span>
                   {reason}
                 </p>
               </motion.div>
@@ -422,7 +566,9 @@ export default function App() {
             className="flex items-center justify-center mb-12"
           >
             <Map size={32} className="text-pink-500 mr-3" />
-            <h2 className="text-4xl font-semibold text-pink-500">Our Future Together</h2>
+            <h2 className="text-4xl font-semibold text-pink-500">
+              Our Future Together
+            </h2>
           </motion.div>
 
           <motion.div
@@ -433,14 +579,27 @@ export default function App() {
             viewport={{ once: true }}
           >
             <p className="text-lg text-gray-700 mb-6">
-              As we continue our journey together, here are some of the adventures I dream of sharing with you:
+              As we continue our journey together, here are some of the
+              adventures I dream of sharing with you:
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
               {[
-                { title: "Travel the World", icon: "✈️", text: "Exploring new places, creating memories in cities we've always dreamed of visiting" },
-                { title: "Build Our Home", icon: "🏠", text: "Creating a space that's uniquely ours, filled with love and laughter" },
-                { title: "Grow Together", icon: "🌱", text: "Supporting each other's dreams and celebrating all of life's moments" }
+                {
+                  title: "Travel the World",
+                  icon: "✈️",
+                  text: "Exploring new places, creating memories in cities we've always dreamed of visiting",
+                },
+                {
+                  title: "Build Our Home",
+                  icon: "🏠",
+                  text: "Creating a space that's uniquely ours, filled with love and laughter",
+                },
+                {
+                  title: "Grow Together",
+                  icon: "🌱",
+                  text: "Supporting each other's dreams and celebrating all of life's moments",
+                },
               ].map((plan, idx) => (
                 <motion.div
                   key={idx}
@@ -452,7 +611,9 @@ export default function App() {
                   whileHover={{ y: -5 }}
                 >
                   <span className="text-4xl mb-4 block">{plan.icon}</span>
-                  <h3 className="text-xl font-bold text-pink-600 mb-2">{plan.title}</h3>
+                  <h3 className="text-xl font-bold text-pink-600 mb-2">
+                    {plan.title}
+                  </h3>
                   <p className="text-gray-700">{plan.text}</p>
                 </motion.div>
               ))}
@@ -470,20 +631,22 @@ export default function App() {
               <motion.div
                 key={i}
                 className="absolute"
-                initial={{ 
-                  x: window.innerWidth / 2, 
+                initial={{
+                  x: window.innerWidth / 2,
                   y: window.innerHeight / 2,
-                  scale: 0
+                  scale: 0,
                 }}
-                animate={{ 
-                  x: window.innerWidth / 2 + (Math.random() - 0.5) * window.innerWidth,
+                animate={{
+                  x:
+                    window.innerWidth / 2 +
+                    (Math.random() - 0.5) * window.innerWidth,
                   y: -100,
                   scale: Math.random() * 2 + 0.5,
                   rotate: Math.random() * 360,
-                  transition: { 
+                  transition: {
                     duration: 2 + Math.random() * 3,
-                    ease: "easeOut" 
-                  }
+                    ease: "easeOut",
+                  },
                 }}
               >
                 <span className="text-4xl">❤️</span>
@@ -509,7 +672,8 @@ export default function App() {
           transition={{ duration: 1, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          Thank you for being the most amazing person in my life. My heart is yours, today and always.
+          Thank you for being the most amazing person in my life. My heart is
+          yours, today and always.
         </motion.p>
 
         <motion.div
