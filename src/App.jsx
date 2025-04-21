@@ -181,8 +181,9 @@ export default function App() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 1 }}
         >
-          This page is a testament to our love, a digital scrapbook of our
-          journey together.
+          This page is my little love letter to you — a collection of memories,
+          surprises, and everything that makes us *us*. Every part of it is just
+          my way of saying how much I adore you.
         </motion.p>
 
         {/* Improved Click for Surprise Button */}
