@@ -25,8 +25,27 @@ import img7 from "./assets/image7.jpg";
 import img8 from "./assets/image8.jpg";
 import img9 from "./assets/image9.jpg";
 import img10 from "./assets/image10.jpg";
+import img11 from "./assets/image11.jpeg";
+import img12 from "./assets/image12.jpeg";
+import img13 from "./assets/image13.jpeg";
+import img14 from "./assets/image14.jpeg";
 
-const images = [img1, img2, img3, img4, img5, img6, img7, img8,img9,img10];
+const images = [
+  img1,
+  img2,
+  img3,
+  img4,
+  img5,
+  img6,
+  img7,
+  img8,
+  img9,
+  img10,
+  img11,
+  img12,
+  img13,
+  img14,
+];
 
 {
   /* Helper component for text reveal animation */
@@ -466,7 +485,6 @@ export default function App() {
           </motion.button>
         </div>
       </section>
-
 
       {/* Enhanced Photo Album Section with Mobile Optimizations */}
       <section className="py-12 md:py-16 bg-gradient-to-r from-purple-50 to-pink-50">
